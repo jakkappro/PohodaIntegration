@@ -489,6 +489,9 @@ fabric.properties
 
 ### VisualStudioCode ###
 !.vscode/*.code-snippets
+.vscode/settings.json
+.vscode/tasks.json
+.vscode
 
 # Local History for Visual Studio Code
 
