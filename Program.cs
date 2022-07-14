@@ -14,7 +14,7 @@ var pohodamServerName = "test";
 var pathToPohodamServer = "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"";
 var mServerStartCommand = $"cd {pathToPohodamServer} && pohoda.exe /http start {pohodamServerName}";
 Console.WriteLine(mServerStartCommand);
-var authHeader = "STW-Authorization: Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{mServerAccess}:"));
+var authHeader = "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{mServerAccess}:"));
 var mServerBaseAddress = new Uri(pohodaHost);
 
 
@@ -35,7 +35,7 @@ cmd.WaitForExit();
 // test if mServer is running
 using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress }) 
 {
-  httpClient.DefaultRequestHeaders.Add("Authorization", authHeader);
+  httpClient.DefaultRequestHeaders.Add("STW-Authorization", authHeader);
   httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
   using (var response = await httpClient.GetAsync("/status")) 
   {
