@@ -30,7 +30,7 @@ short delayBetweenRetries = 1000;
 var mServer = new MServerStarter("test", pathToPohodamServer, pohodaHost, username, password, delayBetweenRetries, amountOfmServerRetries);
 mServer.StartServer();
 
-Console.WriteLine(mServer.IsConnectionAvailable());
+Console.WriteLine(await mServer.IsConnectionAvailable());
 
 return;
 
