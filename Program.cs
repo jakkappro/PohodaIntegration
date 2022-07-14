@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Xml;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using PohodaIntegration.Pohoda;
 
 var builder = new ConfigurationBuilder()

@@ -31,20 +31,11 @@ namespace PohodaIntegration.Pohoda
 
         public void StartServer()
         {
+            // IDEA: maybe add check if connection is available in case the server is still running
+
             var mServerStartComand = $"cd \"{pathToServer}\" & pohoda.exe /http start {serverName}";
 
-            var cmd = new Process();
-            cmd.StartInfo.FileName = "cmd.exe";
-            cmd.StartInfo.RedirectStandardInput = true;
-            cmd.StartInfo.RedirectStandardOutput = false;
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-
-            cmd.StandardInput.WriteLine(mServerStartComand);
-            cmd.StandardInput.Flush();
-            cmd.StandardInput.Close();
-            cmd.WaitForExit();
+            CreateCommand(mServerStartComand);
         }
 
         public async Task<bool> IsConnectionAvailable()
@@ -98,6 +89,28 @@ namespace PohodaIntegration.Pohoda
             Console.WriteLine("Couldn't connect to the server");
 
             return false;
+        }
+
+        public void StopServer()
+        {
+            var mServerStopComand = $"cd \"{pathToServer}\" & pohoda.exe /http stop {serverName}";
+            CreateCommand(mServerStopComand);
+        }
+
+        private void CreateCommand(string command)
+        {
+            var cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = false;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+
+            cmd.StandardInput.WriteLine(command);
+            cmd.StandardInput.Flush();
+            cmd.StandardInput.Close();
+            cmd.WaitForExit();
         }
 
         private string CreateAuthHeader()
