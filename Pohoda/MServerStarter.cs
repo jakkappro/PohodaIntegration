@@ -4,14 +4,32 @@ using System.Xml;
 
 namespace PohodaIntegration.Pohoda
 {
-    internal class MServerStarter
+    internal class MServerStarter : IServerStarter
     {
-        public MServerStarter()
+        #region Variables
+        private readonly string serverName;
+        private readonly string pathToServer;
+        private readonly string serverUrl;
+        private readonly string username;
+        private readonly string password;
+        private readonly short retryDelay;
+        private short amountOfRetries;
+        #endregion
+
+        #region Constructor
+        public MServerStarter(string serverName, string pathToServer, string serverUrl, string username, string password, short retryDelay, short amountOfRetries)
         {
-
+            this.serverName = serverName;
+            this.pathToServer = pathToServer;
+            this.serverUrl = serverUrl;
+            this.username = username;
+            this.password = password;
+            this.retryDelay = retryDelay;
+            this.amountOfRetries = amountOfRetries;
         }
+        #endregion
 
-        public async Task<bool> startAsync(string serverName, string pathToServer, string serverUrl, string username, string password, short retryDelay, short amountOfRetries)
+        public void StartServer()
         {
             var mServerStartComand = $"cd \"{pathToServer}\" & pohoda.exe /http start {serverName}";
 
@@ -27,69 +45,62 @@ namespace PohodaIntegration.Pohoda
             cmd.StandardInput.Flush();
             cmd.StandardInput.Close();
             cmd.WaitForExit();
-
-            return await testConnectionAsync(serverUrl, username, password, retryDelay, amountOfRetries, serverName);
         }
 
-        private async Task<bool> testConnectionAsync(string serverUrl, string username, string password, short retryDelay, short amountOfmServerRetries, string serverName)
+        public async Task<bool> IsConnectionAvailable()
         {
-            using (var httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) })
+            using var httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) };
+            httpClient.DefaultRequestHeaders.Add("STW-Authorization", CreateAuthHeader());
+            httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
+
+            var responseCode = HttpStatusCode.BadRequest;
+
+            while (responseCode != HttpStatusCode.OK && amountOfRetries >= 0)
             {
-                httpClient.DefaultRequestHeaders.Add("STW-Authorization", createAuthHeader(username, password));
-                httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
+                amountOfRetries--;
 
-                var responseCode = HttpStatusCode.BadRequest;
-
-                while (responseCode != HttpStatusCode.OK && amountOfmServerRetries >= 0)
+                try
                 {
-                    amountOfmServerRetries--;
-
-                    try
+                    using var response = await httpClient.GetAsync("/status");
+                    responseCode = response.StatusCode;
+                    if (response.StatusCode != HttpStatusCode.OK)
                     {
-                        using (var response = await httpClient.GetAsync("/status"))
-                        {
-                            responseCode = response.StatusCode;
-                            if (response.StatusCode != HttpStatusCode.OK)
-                            {
-                                Console.WriteLine("Error: Couldn't connect to mServer \nResponseCode" + response.StatusCode);
-                                continue;   
-                            }
-
-                            var xmlDoc = new XmlDocument();
-                            var responseString = await response.Content.ReadAsStringAsync();
-                            xmlDoc.LoadXml(responseString);
-                            try
-                            {
-                                var actualServerName = xmlDoc.GetElementsByTagName("name")[0].InnerText;
-
-                                if (!actualServerName.Equals(serverName))
-                                {
-                                    return false;
-                                }
-
-                                Console.WriteLine("mServer is running on " + serverName);
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("Error: Couldn't get mServer name");
-                                return false;
-                            }
-                        }
-                    }
-                    catch (System.Net.Http.HttpRequestException)
-                    {
+                        Console.WriteLine("Error: Couldn't connect to mServer \nResponseCode" + response.StatusCode);
+                        continue;
                     }
 
-                    await Task.Delay(retryDelay);
+                    var xmlDoc = new XmlDocument();
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    xmlDoc.LoadXml(responseString);
+                    var actualServerName = xmlDoc.GetElementsByTagName("name")[0].InnerText;
+
+                    if (!actualServerName.Equals(serverName))
+                    {
+                        return false;
+                    }
+
+                    Console.WriteLine("mServer is running on " + serverName);
+                    return true;
+
+                }
+                catch (HttpRequestException)
+                {
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine("Couldn't connect to server.");
+                    return false;
                 }
 
-                Console.WriteLine("Couldn't connect to the server");
-
-                return false;
+                await Task.Delay(retryDelay);
             }
+
+            Console.WriteLine("Couldn't connect to the server");
+
+            return false;
         }
 
-        private string createAuthHeader(string username, string password)
+        private string CreateAuthHeader()
         {
             return "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"));
         }
