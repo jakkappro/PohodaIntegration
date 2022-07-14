@@ -24,9 +24,9 @@ var delayBetweenRetries = 1000;
 // start mServer
 var cmd = new Process();
 cmd.StartInfo.FileName = "cmd.exe";
-cmd.StartInfo.RedirectStandardInput = false;
+cmd.StartInfo.RedirectStandardInput = true;
 cmd.StartInfo.RedirectStandardOutput = false;
-cmd.StartInfo.CreateNoWindow = true;
+cmd.StartInfo.CreateNoWindow = false;
 cmd.StartInfo.UseShellExecute = false;
 cmd.Start();
 
