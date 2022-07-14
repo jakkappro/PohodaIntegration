@@ -3,12 +3,18 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net;
 using System.Xml;
+using Microsoft.Extensions.Configuration;
 
-var baseAddress = new Uri("https://private-anon-935b1c06cc-expandopublicapi.apiary-mock.com/api/v2/");
-var access_token = "11w1QgSM7YR4tHyr4BR0BV";
+var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+IConfigurationRoot configuration = builder.Build();
+
+var baseAddress = new Uri(configuration.GetSection("Expando:mockServerBaseAdress").Value);
+var access_token = configuration.GetSection("Expando:apiKey").Value;
 var days = 1;
 
-var mServerAccess = "admin:acecom";
+var mServerAccess = $"{configuration.GetSection("Pohoda:mServer:username")}:{configuration.GetSection("Pohoda:mServer:password")}";
 var pohodaPort = 5336;
 var pohodaHost = "http://127.0.0.1:" + pohodaPort;
 var pohodamServerName = "test";
@@ -19,7 +25,6 @@ var authHeader = "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.Get
 var mServerBaseAddress = new Uri(pohodaHost);
 var amountOfmServerRetries = 3;
 var delayBetweenRetries = 1000;
-
 
 // start mServer
 var cmd = new Process();
@@ -60,8 +65,16 @@ using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress })
           var xmlDoc = new XmlDocument();
           var responseString = await response.Content.ReadAsStringAsync();
           xmlDoc.LoadXml(responseString);
+          try 
+          {
           var serverName = xmlDoc.GetElementsByTagName("name")[0].InnerText;
           Console.WriteLine("mServer is running on " + serverName);
+          }
+          catch (Exception) 
+          {
+            Console.WriteLine("Error: Couldn't get mServer name");
+            return;
+          }
       }
     } 
     catch (System.Net.Http.HttpRequestException) 
