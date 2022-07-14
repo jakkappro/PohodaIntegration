@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net;
+using System.Xml;
 
 var baseAddress = new Uri("https://private-anon-935b1c06cc-expandopublicapi.apiary-mock.com/api/v2/");
 var access_token = "11w1QgSM7YR4tHyr4BR0BV";
@@ -56,8 +57,10 @@ using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress })
             return;
           }
 
+          var xmlDoc = new XmlDocument();
           var responseString = await response.Content.ReadAsStringAsync();
-          Console.WriteLine(responseString);
+          xmlDoc.LoadXml(responseString);
+          var serverName = xmlDoc.GetElementsByTagName("name")[0].InnerText;
       }
     } 
     catch (System.Net.Http.HttpRequestException) 
