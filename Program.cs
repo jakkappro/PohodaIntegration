@@ -9,7 +9,7 @@ var days = 1;
 
 var mServerAccess = "admin:acecom";
 var pohodaPort = 5336;
-var pohodaHost = "127.0.0.1:" + pohodaPort;
+var pohodaHost = "http://127.0.0.1:" + pohodaPort;
 var pohodamServerName = "test";
 var pathToPohodamServer = "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"";
 var mServerStartCommand = $"cd {pathToPohodamServer} && pohoda.exe /http start {pohodamServerName}";
