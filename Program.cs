@@ -32,7 +32,6 @@ cmd.Start();
 
 cmd.StandardInput.WriteLine(mServerStartCommand);
 cmd.StandardInput.Flush();
-cmd.StandardInput.Close();
 cmd.WaitForExit();
 
 // test if mServer is running
