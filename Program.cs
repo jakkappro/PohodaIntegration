@@ -32,6 +32,7 @@ cmd.Start();
 
 cmd.StandardInput.WriteLine(mServerStartCommand);
 cmd.StandardInput.Flush();
+cmd.StandardInput.Close();
 cmd.WaitForExit();
 
 // test if mServer is running
@@ -60,6 +61,7 @@ using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress })
           var responseString = await response.Content.ReadAsStringAsync();
           xmlDoc.LoadXml(responseString);
           var serverName = xmlDoc.GetElementsByTagName("name")[0].InnerText;
+          Console.WriteLine("mServer is running on " + serverName);
       }
     } 
     catch (System.Net.Http.HttpRequestException) 
