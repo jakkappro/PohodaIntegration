@@ -16,6 +16,8 @@ var mServerStartCommand = $"cd {pathToPohodamServer} && pohoda.exe /http start {
 Console.WriteLine(mServerStartCommand);
 var authHeader = "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{mServerAccess}:"));
 var mServerBaseAddress = new Uri(pohodaHost);
+var amountOfmServerRetries = 3;
+var delayBetweenRetries = 1000;
 
 
 // start mServer
@@ -39,12 +41,19 @@ using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress })
   httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
   using (var response = await httpClient.GetAsync("/status")) 
   {
-    var responseString = await response.Content.ReadAsStringAsync();
-    Console.WriteLine(responseString);
+    while (response.StatusCode != HttpStatusCode.OK && amountOfmServerRetries >= 0)
+    {
+      amountOfmServerRetries--;
+      await Task.Delay(delayBetweenRetries);
+    }
+    
     if (response.StatusCode != HttpStatusCode.OK) {
       Console.WriteLine("Error: Couldn't connect to mServer \nResponseCode" + response.StatusCode);
       return;
     }
+
+    var responseString = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(responseString);
   }
 }
 
