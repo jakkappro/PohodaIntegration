@@ -39,22 +39,33 @@ using (var httpClient = new HttpClient{ BaseAddress = mServerBaseAddress })
 {
   httpClient.DefaultRequestHeaders.Add("STW-Authorization", authHeader);
   httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
-  using (var response = await httpClient.GetAsync("/status")) 
+  
+  var responseCode = HttpStatusCode.BadRequest;
+
+  while (responseCode != HttpStatusCode.OK && amountOfmServerRetries >= 0)
   {
-    while (response.StatusCode != HttpStatusCode.OK && amountOfmServerRetries >= 0)
+    amountOfmServerRetries--;
+
+    try 
     {
-      amountOfmServerRetries--;
-      await Task.Delay(delayBetweenRetries);
-    }
-    
-    if (response.StatusCode != HttpStatusCode.OK) {
-      Console.WriteLine("Error: Couldn't connect to mServer \nResponseCode" + response.StatusCode);
-      return;
+      using (var response = await httpClient.GetAsync("/status")) 
+        {
+          responseCode = response.StatusCode;
+          if (response.StatusCode != HttpStatusCode.OK) {
+            Console.WriteLine("Error: Couldn't connect to mServer \nResponseCode" + response.StatusCode);
+            return;
+          }
+
+          var responseString = await response.Content.ReadAsStringAsync();
+          Console.WriteLine(responseString);
+      }
+    } 
+    catch (System.Net.Http.HttpRequestException) 
+    {
     }
 
-    var responseString = await response.Content.ReadAsStringAsync();
-    Console.WriteLine(responseString);
-  }
+    await Task.Delay(delayBetweenRetries);
+  }  
 }
 
 return;
