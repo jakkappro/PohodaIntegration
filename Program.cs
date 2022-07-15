@@ -1,5 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Xml.Serialization;
+using Microsoft.Extensions.Configuration;
+using PohodaIntegration;
+using PohodaIntegration.Models.Orders.Pohoda;
 using PohodaIntegration.Pohoda;
+
+// TODO: abstract serializing and deserializing of xml files and strings
+
 
 var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -18,11 +24,12 @@ var pohodaPort = 5336;
 var pohodaHost = "http://127.0.0.1:" + pohodaPort;
 var pohodamServerName = "test";
 var pathToPohodamServer = "\"C:\\Program Files (x86)\\STORMWARE\\POHODA SK E1\"";
-var mServerStartCommand = $"cd {pathToPohodamServer} && pohoda.exe /http start {pohodamServerName}";
-Console.WriteLine(mServerStartCommand);
 short amountOfmServerRetries = 3;
 short delayBetweenRetries = 1000;
 #endregion
+
+// xml parsing test
+var aha = PohodaOrderModel.Deserialize("C:\\Users\\Kubino\\Downloads\\xmlData\\pure\\pohodaObjednavkaRequest.xml");
 
 // start mServer
 var mServer = new MServerStarter("test", pathToPohodamServer, pohodaHost, username, password, delayBetweenRetries, amountOfmServerRetries);

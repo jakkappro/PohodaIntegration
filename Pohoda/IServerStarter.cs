@@ -1,4 +1,6 @@
-﻿namespace PohodaIntegration.Pohoda
+﻿using PohodaIntegration.Models.Orders.Pohoda;
+
+namespace PohodaIntegration.Pohoda
 {
     public interface IServerStarter
     {
@@ -7,5 +9,7 @@
         Task<bool> IsConnectionAvailable();
 
         void StopServer();
+
+        PohodaOrderModel GetOrder();
     }
 }

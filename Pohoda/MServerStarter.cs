@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using System.Xml;
+using PohodaIntegration.Models.Orders.Pohoda;
 
 namespace PohodaIntegration.Pohoda
 {
@@ -29,6 +30,7 @@ namespace PohodaIntegration.Pohoda
         }
         #endregion
 
+        #region InterfaceMethods
         public void StartServer()
         {
             // IDEA: maybe add check if connection is available in case the server is still running
@@ -40,6 +42,7 @@ namespace PohodaIntegration.Pohoda
 
         public async Task<bool> IsConnectionAvailable()
         {
+            // TODO: load httpClien from factory 
             using var httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) };
             httpClient.DefaultRequestHeaders.Add("STW-Authorization", CreateAuthHeader());
             httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
@@ -97,6 +100,13 @@ namespace PohodaIntegration.Pohoda
             CreateCommand(mServerStopComand);
         }
 
+        public PohodaOrderModel GetOrder()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region PrivateMethods
         private void CreateCommand(string command)
         {
             var cmd = new Process();
@@ -117,5 +127,6 @@ namespace PohodaIntegration.Pohoda
         {
             return "Basic " + Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"));
         }
+        #endregion
     }
 }
