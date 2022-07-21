@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using System.Text;
 using System.Xml;
 
 namespace PrehomeXMLFeedIntegration;
 
 public class MServerStarter
 {
-     #region Variables
+         #region Variables
         private readonly string serverName;
         private readonly string pathToServer;
         private readonly string serverUrl;
@@ -14,6 +15,7 @@ public class MServerStarter
         private readonly string password;
         private readonly short retryDelay;
         private short amountOfRetries;
+        private HttpClient httpClient;
         #endregion
 
         #region Constructor
@@ -41,7 +43,7 @@ public class MServerStarter
         public async Task<bool> IsConnectionAvailable()
         {
             // TODO: load httpClient from factory 
-            using var httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) };
+            httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) };
             httpClient.DefaultRequestHeaders.Add("STW-Authorization", CreateAuthHeader());
             httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");
 
@@ -92,8 +94,16 @@ public class MServerStarter
             return false;
         }
 
+        public async Task<bool> ModifyOrders(string orders)
+        {
+            await httpClient.PostAsync("/xml", new ByteArrayContent(Encoding.ASCII.GetBytes(orders)));
+
+            return true;
+        }
+
         public void StopServer()
         {
+            httpClient.Dispose();
             var mServerStopCommand = $"cd \"{pathToServer}\" & pohoda.exe /http stop {serverName}";
             CreateCommand(mServerStopCommand);
         }
