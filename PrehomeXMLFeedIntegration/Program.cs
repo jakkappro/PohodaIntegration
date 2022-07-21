@@ -197,6 +197,8 @@ namespace PrehomeXMLFeedIntegration
 
             var mServer = new MServerStarter(pohodamServerName, pathToPohodamServer, pohodaHost, username, password,
                 delayBetweenRetries, amountOfmServerRetries);
+
+            await mServer.ModifyOrders(PohodaCreateOrderModel.dataPack.Serialize(dataPack));
         }
     }
 }
