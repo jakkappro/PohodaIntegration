@@ -29,7 +29,7 @@ public class MServerStarter
         }
         #endregion
 
-        #region InterfaceMethods
+        #region PublicMethods
         public void StartServer()
         {
             // IDEA: maybe add check if connection is available in case the server is still running
@@ -40,7 +40,7 @@ public class MServerStarter
 
         public async Task<bool> IsConnectionAvailable()
         {
-            // TODO: load httpClien from factory 
+            // TODO: load httpClient from factory 
             using var httpClient = new HttpClient { BaseAddress = new Uri(serverUrl) };
             httpClient.DefaultRequestHeaders.Add("STW-Authorization", CreateAuthHeader());
             httpClient.DefaultRequestHeaders.Add("Accept", "text/xml");

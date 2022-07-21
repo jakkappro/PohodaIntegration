@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PrehomeXMLFeedIntegration.Models.Pohoda
+﻿namespace PrehomeXMLFeedIntegration.Models.Pohoda
 {
-    internal class PohodaModel
+    public class PohodaModel
     {
+
     }
 }

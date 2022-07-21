@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace PrehomeXMLFeedIntegration.Models.Prehome
 {
@@ -19,16 +20,16 @@ namespace PrehomeXMLFeedIntegration.Models.Prehome
             return writer.ToString();
         }
 
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+        [SerializableAttribute()]
+        [DesignerCategory("code")]
+        [XmlTypeAttribute(AnonymousType = true)]
+        [XmlRootAttribute(Namespace = "", IsNullable = false)]
         public partial class SHOP
         {
 
             private SHOPSHOPITEM[] sHOPITEMField;
 
-            [System.Xml.Serialization.XmlElementAttribute("SHOPITEM")]
+            [XmlElementAttribute("SHOPITEM")]
             public SHOPSHOPITEM[] SHOPITEM
             {
                 get => this.sHOPITEMField;
@@ -36,9 +37,9 @@ namespace PrehomeXMLFeedIntegration.Models.Prehome
             }
         }
 
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+        [SerializableAttribute()]
+        [DesignerCategoryAttribute("code")]
+        [XmlTypeAttribute(AnonymousType = true)]
         public partial class SHOPSHOPITEM
         {
 
@@ -187,9 +188,9 @@ namespace PrehomeXMLFeedIntegration.Models.Prehome
             }
         }
 
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+        [SerializableAttribute()]
+        [DesignerCategoryAttribute("code")]
+        [XmlTypeAttribute(AnonymousType = true)]
         public partial class SHOPSHOPITEMDELIVERY
         {
 

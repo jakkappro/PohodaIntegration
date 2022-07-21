@@ -1,0 +1,130 @@
+<dat:dataPack xmlns:ftr="http://www.stormware.cz/schema/version_2/filter.xsd" xmlns:dat="http://www.stormware.cz/schema/version_2/data.xsd" xmlns:stk="http://www.stormware.cz/schema/version_2/stock.xsd" xmlns:typ="http://www.stormware.cz/schema/version_2/type.xsd" id="zas002" ico="12345678" application="StwTest" version="2.0" note="Import skladové zásoby">
+    <dat:dataPackItem id="ZAS001" version="2.0">
+        <stk:stock version="2.0">
+            <stk:actionType>
+                <!--  smazani zaznamu <delete> je nutne definovat filtr pro nalezeni zasoby -->
+                <!-- smazani bude provedeno pouze tehdy, pokud filtr nalezne prave 1 zaznam, v ostatnich pripadaech bude komunikace ukoncena -->
+                <stk:delete>
+                    <ftr:filter>
+                        <ftr:code>KPSAN</ftr:code>
+                        <!--  kod zasoby  -->
+                    </ftr:filter>
+                </stk:delete>
+            </stk:actionType>
+        </stk:stock>
+    </dat:dataPackItem>
+</dat:dataPack><dat:dataPack xmlns:ftr="http://www.stormware.cz/schema/version_2/filter.xsd" xmlns:dat="http://www.stormware.cz/schema/version_2/data.xsd" xmlns:stk="http://www.stormware.cz/schema/version_2/stock.xsd" xmlns:typ="http://www.stormware.cz/schema/version_2/type.xsd" id="zas002" ico="12345678" application="StwTest" version="2.0" note="Import skladové zásoby">
+    <dat:dataPackItem id="ZAS001" version="2.0">
+        <stk:stock version="2.0">
+            <!-- blok pro definici typu importu, pokud není uveden = jedna se o import noveho zaznamu -->
+            <!-- pokud je uveden, musime defonovat typ komunikace -->
+            <stk:actionType>
+                <!-- aktualizacni import existujiciho zaznamu,element <update> definuje filtr pro nalezeni zasoby -->
+                <!-- filtr dle jednoho pozadavku ; definice ve schema filter.xsd  -->
+                <stk:update>
+                    <ftr:filter>
+                        <ftr:code>41648</ftr:code>
+                        <!--  kod zasoby  -->
+                    </ftr:filter>
+                </stk:update>
+            </stk:actionType>
+            <!-- na zasobe budou aktualizovany budou pouze hodnoty, ktere definujeme v XML -->
+            <stk:stockHeader>
+                <stk:stockType>card</stk:stockType>
+                <stk:code>41648</stk:code>
+                <stk:EAN>8591022403310</stk:EAN>
+                <!-- <stk:IsSerialNumber>false</stk:IsSerialNumber> ked tam dam toto tak to nefunguje, neviem ako to pohoda spracuje -->
+                <stk:PLU>0</stk:PLU>
+                <stk:isSales>true</stk:isSales>
+                <stk:isInternet>true</stk:isInternet>
+                <stk:isBatch>true</stk:isBatch>
+                <stk:purchasingRateVAT>high</stk:purchasingRateVAT>
+                <stk:sellingRateVAT>high</stk:sellingRateVAT>
+                <stk:name>Monitor LCD 226cw</stk:name>
+                <stk:nameComplement>ISO 9001</stk:nameComplement>
+                <stk:unit>ks</stk:unit>
+                <stk:storage>
+                    <typ:ids>GoNoow</typ:ids>
+                </stk:storage>
+                <stk:typePrice>
+                    <typ:ids>SK</typ:ids>
+                </stk:typePrice>
+                <stk:purchasingPrice>3000.32</stk:purchasingPrice>
+                <stk:sellingPrice>3600.32</stk:sellingPrice>
+                <stk:limitMin>0</stk:limitMin>
+                <stk:limitMax>0</stk:limitMax>
+                <stk:mass>5.1</stk:mass>
+                <stk:supplier>
+                    <typ:id>25</typ:id>
+                </stk:supplier>
+                <stk:producer>Čermák s.r.o.</stk:producer>
+                <stk:description>Popis 1</stk:description>
+                <stk:pictures>
+                    <stk:picture default="true">
+                        <stk:filepath>image1.jpg</stk:filepath>
+                        <stk:description>description image1</stk:description>
+                    </stk:picture>
+                </stk:pictures>
+                <stk:note>Načteno z XML.</stk:note>
+                <stk:relatedLinks>
+                    <stk:relatedLink>
+                        <stk:addressURL>"https://testicek.com"</stk:addressURL>
+                        <stk:description>obrazok produktu</stk:description>
+                        <stk:order>1</stk:order>
+                    </stk:relatedLink>
+                </stk:relatedLinks>
+                <stk:id>41648</stk:id>
+            </stk:stockHeader>
+        </stk:stock>
+    </dat:dataPackItem>
+</dat:dataPack><dat:dataPack xmlns:ftr="http://www.stormware.cz/schema/version_2/filter.xsd" xmlns:dat="http://www.stormware.cz/schema/version_2/data.xsd" xmlns:stk="http://www.stormware.cz/schema/version_2/stock.xsd" xmlns:typ="http://www.stormware.cz/schema/version_2/type.xsd" id="zas002" ico="12345678" application="StwTest" version="2.0" note="Import skladové zásoby">
+    <dat:dataPackItem id="ZAS001" version="2.0">
+        <stk:stock version="2.0">
+            <stk:stockHeader>
+                <stk:stockType>card</stk:stockType>
+                <stk:code>41648</stk:code>
+                <stk:EAN>8591022403310</stk:EAN>
+                <!-- <stk:IsSerialNumber>false</stk:IsSerialNumber> ked tam dam toto tak to nefunguje, neviem ako to pohoda spracuje -->
+                <stk:PLU>0</stk:PLU>
+                <stk:isSales>true</stk:isSales>
+                <stk:isInternet>true</stk:isInternet>
+                <stk:isBatch>true</stk:isBatch>
+                <stk:purchasingRateVAT>high</stk:purchasingRateVAT>
+                <stk:sellingRateVAT>high</stk:sellingRateVAT>
+                <stk:name>Monitor LCD 226cw</stk:name>
+                <stk:nameComplement>ISO 9001</stk:nameComplement>
+                <stk:unit>ks</stk:unit>
+                <stk:storage>
+                    <typ:ids>GoNoow</typ:ids>
+                </stk:storage>
+                <stk:typePrice>
+                    <typ:ids>SK</typ:ids>
+                </stk:typePrice>
+                <stk:purchasingPrice>3000.32</stk:purchasingPrice>
+                <stk:sellingPrice>3600.32</stk:sellingPrice>
+                <stk:limitMin>0</stk:limitMin>
+                <stk:limitMax>0</stk:limitMax>
+                <stk:mass>5.1</stk:mass>
+                <stk:supplier>
+                    <typ:id>25</typ:id>
+                </stk:supplier>
+                <stk:producer>Čermák s.r.o.</stk:producer>
+                <stk:description>Popis 1</stk:description>
+                <stk:pictures>
+                    <stk:picture default="true">
+                        <stk:filepath>image1.jpg</stk:filepath>
+                        <stk:description>description image1</stk:description>
+                    </stk:picture>
+                </stk:pictures>
+                <stk:note>Načteno z XML.</stk:note>
+                <stk:relatedLinks>
+                    <stk:relatedLink>
+                        <stk:addressURL>"https://testicek.com"</stk:addressURL>
+                        <stk:description>obrazok produktu</stk:description>
+                        <stk:order>1</stk:order>
+                    </stk:relatedLink>
+                </stk:relatedLinks>
+            </stk:stockHeader>
+        </stk:stock>
+    </dat:dataPackItem>
+</dat:dataPack>

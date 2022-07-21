@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vGof+cg+3r0KSktTEgEtVV6/bhVEgYt4LK6YAB+L5I90Whxsi04/WReedhN0bPxnn0jjMMGFGC0HE4qKbtIHnA==",
+  "dgSpecHash": "avEGY7v3xqq6hT+XOOsn9s6JO5fQextZEZaCqSHUNGo8wZh5H+wpADc8ftKjQ+QUV1q8Rh9Fg5IIsdTtdygnEQ==",
   "success": true,
-  "projectFilePath": "C:\\dev\\customDev\\ecommerce\\PrehomeXMLFeedIntegration\\PrehomeXMLFeedIntegration.csproj",
+  "projectFilePath": "C:\\dev\\customDev\\ecommerce\\PohodaIntegration\\PrehomeXMLFeedIntegration\\PrehomeXMLFeedIntegration.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kubino\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
@@ -12,6 +12,9 @@
     "C:\\Users\\Kubino\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\Kubino\\.nuget\\packages\\serilog\\2.11.0\\serilog.2.11.0.nupkg.sha512",
+    "C:\\Users\\Kubino\\.nuget\\packages\\serilog.sinks.console\\4.0.1\\serilog.sinks.console.4.0.1.nupkg.sha512",
+    "C:\\Users\\Kubino\\.nuget\\packages\\serilog.sinks.file\\5.0.0\\serilog.sinks.file.5.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\Kubino\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512"
